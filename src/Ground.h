@@ -35,13 +35,13 @@ using namespace sf;
         pos.x+= xVel*dt;
 
         // cout<<"otoy"<<speed<<endl;
-        if(pos.x<= -1280) teleport();
+        if(pos.x<= -1280*2) teleport();
 
         return sprite;
     };
 
     void teleport(){
-        pos.x= 1280;
+        pos.x= 1280*2;
     };
 
  };
