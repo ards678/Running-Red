@@ -6,19 +6,20 @@ using namespace sf;
 class SpriteAnimate{
 public:
 	SpriteAnimate(String ,IntRect, Vector2f, float, int, int);
-	void animate();
-	void jump();
+	void animate(float dt);
+	void jump( );
 	//void slide();
+	Music jumpSound;
 	Sprite sprite;
 	int increment;
 	float x, y;
 private:
-	void updatePosition();
+	void updatePosition(float dt);
 	Texture t;
 	IntRect rect;
 	Clock clock, c;
 	float defaultPos;
-	float velocity = 0, gravity = 1;
+	float velocity = 0, gravity = 1.2;
 	float frames;
 	int bounds;
 };
@@ -37,7 +38,7 @@ SpriteAnimate::SpriteAnimate(String s, IntRect r, Vector2f f, float fr, int b, i
 	increment = i;
 }
 
-void SpriteAnimate::animate(){
+void SpriteAnimate::animate(float dt){
 	if (clock.getElapsedTime().asSeconds() > frames){
 		if (rect.left >= bounds)
 			rect.left = 0;
@@ -46,10 +47,13 @@ void SpriteAnimate::animate(){
 		sprite.setTextureRect(rect);
 		clock.restart();
 	}
-	updatePosition();
+	updatePosition(dt);
 }
 
-void SpriteAnimate::jump(){
+void SpriteAnimate::jump( ){
+
+  	jumpSound.openFromFile("content/jump.ogg") ;
+	jumpSound.play();
 	if(sprite.getPosition().y == defaultPos)
 		velocity = -25;
 }
@@ -58,8 +62,8 @@ void SpriteAnimate::jump(){
 // 	velocity = 25;
 // }
 
-void SpriteAnimate::updatePosition(){
-	velocity += gravity;
+void SpriteAnimate::updatePosition(float dt){
+	velocity += gravity*dt;
 	y += velocity;
 	if(y > defaultPos)
 		y = defaultPos;
