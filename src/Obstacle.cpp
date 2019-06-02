@@ -12,19 +12,24 @@ namespace S{
     }
 
     void Obstacle::Spawn(){
+        this->num_obstacles++;
         sf::Sprite sprite(this->_data->assets.GetTexture("Obstacle1"));
-        sprite.setPosition(this->_data->window.getSize().x, this->_data->window.getSize().y-sprite.getGlobalBounds().height);
-        ObstacleSprites.push_back(sprite);
+        sprite.setPosition(this->_data->window.getSize().x, this->_data->window.getSize().y-363);
+        this->ObstacleSprites.push_back(sprite);
     }
 
-    void Obstacle::MoveObstacles(float dt){
+    void Obstacle::Destroy(){
+        this->ObstacleSprites.erase(ObstacleSprites.begin());
+    }
+
+    void Obstacle::MoveObstacles(float dt, float speed){
         for(unsigned short int i=0; i<ObstacleSprites.size(); i++){
             if(ObstacleSprites.at(i).getPosition().x<0 - ObstacleSprites.at(i).getGlobalBounds().width){
                 ObstacleSprites.erase(ObstacleSprites.begin()+i);
             }
             else{
                 sf::Vector2f position = ObstacleSprites.at(i).getPosition();
-                float movement = OBSTACLE_SPEED*dt;
+                float movement = speed*dt;
                 ObstacleSprites.at(i).move(-movement,0);
             }
         }

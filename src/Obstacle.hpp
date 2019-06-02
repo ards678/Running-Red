@@ -7,9 +7,11 @@
 namespace S{
     class Obstacle{
         public:
+            int num_obstacles = 0;
             Obstacle(GameDataRef data);
             void Spawn();
-            void MoveObstacles(float dt);
+            void MoveObstacles(float dt, float speed);
+            void Destroy( );
             void DrawObstacle();
 
         private:
