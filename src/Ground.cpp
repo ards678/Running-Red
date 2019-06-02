@@ -13,9 +13,9 @@ namespace S{
         _GroundSprite.push_back(sprite2);
     }
 
-    void Ground::MoveGround(float dt){
+    void Ground::MoveGround(float dt, float speed){
         for(unsigned short int i=0; i<_GroundSprite.size(); i++){
-            float movement = OBSTACLE_SPEED*dt;
+            float movement = speed*dt;
             _GroundSprite.at(i).move(-movement,0.0f);
             if(_GroundSprite.at(i).getPosition().x<0-_GroundSprite.at(i).getGlobalBounds().width){
                 sf::Vector2f position(_data->window.getSize().x, _GroundSprite.at(i).getPosition().y);

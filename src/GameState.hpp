@@ -5,6 +5,7 @@
 #include "Obstacle.hpp"
 #include "Ground.hpp"
 #include "Game.hpp"
+#include "Player.hpp"
 
 namespace S{
     class GameState : public State{
@@ -20,6 +21,7 @@ namespace S{
             GameDataRef _data;
 
             sf::Sprite _background;
+            Player *player;
             sf::Sprite _player;
             sf::Sprite _cloud;
             sf::Sprite _ground;
@@ -29,5 +31,6 @@ namespace S{
             Obstacle *obstacle;
             Ground *ground;
             sf::Clock clock;
+            sf::Clock gameClock;
     };
 }

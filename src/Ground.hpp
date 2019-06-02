@@ -9,7 +9,7 @@ namespace S{
         public:
             Ground(GameDataRef data);
 
-            void MoveGround(float dt);
+            void MoveGround(float dt, float speed);
             void DrawGround();
         private:
             GameDataRef _data;
