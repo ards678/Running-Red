@@ -22,6 +22,9 @@ namespace S{
             if(sf::Event::Closed == event.type){
                 this->_data->window.close();
             }
+            if(_data->input.Restart()){
+                _data->machine.AddState(StateRef(new GameState(_data)),true);
+            }
 
         }
     }

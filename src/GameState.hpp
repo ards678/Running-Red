@@ -4,7 +4,10 @@
 #include "State.hpp"
 #include "Obstacle.hpp"
 #include "Ground.hpp"
+#include "Red.hpp"
 #include "Game.hpp"
+#include "CollisionChecker.hpp"
+#include "HUD.hpp"
 
 namespace S{
     class GameState : public State{
@@ -28,6 +31,20 @@ namespace S{
             int gameState;
             Obstacle *obstacle;
             Ground *ground;
+            Red *red;
+            HUD *hud;
+            Collision collision;
             sf::Clock clock;
+            sf::Text currentScore;
+
+            sf::SoundBuffer runSoundBuffer;
+            sf::SoundBuffer jumpSoundBuffer;
+            sf::SoundBuffer deathSoundBuffer;
+
+            sf::Sound runSound;
+            sf::Sound jumpSound;
+            sf::Sound deathSound;
+
+            int _gameState, score=0, highScore=0;
     };
 }

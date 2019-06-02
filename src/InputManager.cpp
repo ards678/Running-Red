@@ -19,15 +19,22 @@ namespace S{
         return false;
     }
 
-    bool InputManager::Jump(sf::Sprite object){
+    bool InputManager::Jump(){
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
             return true;
         }
         return false;
     }
 
-    bool InputManager::Slide(sf::Sprite object){
+    bool InputManager::Slide(){
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+            return true;
+        }
+        return false;
+    }
+
+    bool InputManager::Restart(){
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
             return true;
         }
         return false;

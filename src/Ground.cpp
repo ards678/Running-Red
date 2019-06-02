@@ -6,8 +6,8 @@ namespace S{
         sf::Sprite sprite(_data->assets.GetTexture("Ground"));
         sf::Sprite sprite2(_data->assets.GetTexture("Ground"));
 
-        sprite.setPosition(0,_data->window.getSize().y-sprite.getGlobalBounds().height+70);
-        sprite2.setPosition(sprite.getGlobalBounds().width,_data->window.getSize().y-sprite2.getGlobalBounds().height+70);
+        sprite.setPosition(0,_data->window.getSize().y-sprite.getGlobalBounds().height+95);
+        sprite2.setPosition(sprite.getGlobalBounds().width,_data->window.getSize().y-sprite2.getGlobalBounds().height+95);
 
         _GroundSprite.push_back(sprite);
         _GroundSprite.push_back(sprite2);
