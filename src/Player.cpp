@@ -1,5 +1,6 @@
 #include "DEFINITIONS.hpp"
 #import "Player.hpp"
+#import <cmath>
 
 namespace S {
      Player::Player(GameDataRef data): _data(data){
@@ -19,8 +20,8 @@ void Player::initializePlayer(String s, IntRect r, Vector2f f, float fr, int b, 
   increment = i;
 }
 
-void Player::animate(float dt) {
-  if (clock.getElapsedTime().asSeconds() > frames) {
+void Player::animate(float dt, float speed) {
+  if (clock.getElapsedTime().asSeconds() >10*( 1/pow(speed, 0.9))) {
     if (rect.left >= bounds)
       rect.left = 0;
     else

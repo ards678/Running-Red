@@ -49,7 +49,7 @@ void GameState::Update(float dt) {
   float speed = 150 + 40 * elapsed;
   obstacle->MoveObstacles(dt, speed);
   // obstacle->Spawn();
-  player->animate(dt);
+  player->animate(dt,speed);
   ground->MoveGround(dt, speed);
   cout << "time: " << elapsed << endl;
   srand(elapsed);

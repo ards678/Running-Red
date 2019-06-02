@@ -9,12 +9,13 @@ class Player {
  public:
   Player(GameDataRef data);
   void initializePlayer(String, IntRect, Vector2f, float, int, int);
-  void animate(float dt);
+  void animate(float dt,float speed);
   void jump();
   // void slide();
   Music jumpSound;
   Sprite sprite;
   int increment;
+  float speed;
   float x, y;
 
  private:
