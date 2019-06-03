@@ -9,9 +9,9 @@ namespace S{
             ~InputManager();
 
             bool IsSpriteClicked( sf::Sprite object, sf::Mouse::Button button, sf:: RenderWindow &window);
-            bool Jump(sf::Sprite object);
-            bool Slide(sf::Sprite object);
-            bool Restart(sf::Sprite object);
+            bool Jump();
+            bool Slide();
+            bool Restart();
             sf::Vector2i GetMousePoint(sf::RenderWindow &window);
     };
 }

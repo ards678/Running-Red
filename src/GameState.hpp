@@ -4,7 +4,12 @@
 #include "State.hpp"
 #include "Obstacle.hpp"
 #include "Ground.hpp"
+#include "Forests.hpp"
+#include "NightForests.hpp"
+#include "Red.hpp"
 #include "Game.hpp"
+#include "CollisionChecker.hpp"
+#include "HUD.hpp"
 
 namespace S{
     class GameState : public State{
@@ -20,6 +25,7 @@ namespace S{
             GameDataRef _data;
 
             sf::Sprite _background;
+            sf::Sprite _mountain;
             sf::Sprite _player;
             sf::Sprite _cloud;
             sf::Sprite _ground;
@@ -28,6 +34,23 @@ namespace S{
             int gameState;
             Obstacle *obstacle;
             Ground *ground;
+            Forests *forests;
+            NightForests *nightforests;
+            Red *red;
+            HUD *hud;
+            Collision collision;
             sf::Clock clock;
+            sf::Clock timer;
+            sf::Text currentScore;
+
+            sf::SoundBuffer runSoundBuffer;
+            sf::SoundBuffer jumpSoundBuffer;
+            sf::SoundBuffer deathSoundBuffer;
+
+            sf::Sound runSound;
+            sf::Sound jumpSound;
+            sf::Sound deathSound;
+
+            int _gameState, score=0, highScore=0;
     };
 }

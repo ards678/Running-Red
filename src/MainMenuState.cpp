@@ -39,7 +39,7 @@ namespace S{
                 _data->machine.AddState(StateRef(new GameState(_data)),true);
             }
             if(this->_data->input.IsSpriteClicked(this->_creditsButton, sf::Mouse::Left, this->_data->window)){
-                _data->machine.AddState(StateRef(new GameOverState(_data)),true);
+               // _data->machine.AddState(StateRef(new GameOverState(_data)),true);
             }
             if(this->_data->input.IsSpriteClicked(this->_aboutButton, sf::Mouse::Left, this->_data->window)){
                 _data->machine.AddState(StateRef(new GameState(_data)),true);

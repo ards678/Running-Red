@@ -28,7 +28,6 @@ namespace S{
     void SplashState::Update(float dt){
         if(this->_clock.getElapsedTime().asSeconds()>SPLASH_STATE_SHOW_TIME){
             this->_data->machine.AddState(StateRef(new MainMenuState(_data)),true);
-            std::cout<<"SWITCH TO MENU"<<std::endl;
         }
     }
 
