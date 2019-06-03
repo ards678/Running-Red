@@ -57,8 +57,8 @@ namespace S{
     void Red::Update(float dt){
 
         y += velocity;
-        if(y<160){
-            y=160;
+        if(y<150){
+            y=150;
         }
 
         if(y>355){
@@ -67,38 +67,12 @@ namespace S{
         else{
             velocity += GRAVITY*dt;
         }
-        /*if(_RedSprite.getPosition().y>=355){
-            _RedSprite.setPosition(25,355);
-            current = RED_RUNNING;
-        }
-        if(current == RED_SLIDING){
-            _RedSprite.move(0,355);
-        }
-        if(current == RED_FALLING){
-            _RedSprite.move(0,GRAVITY*dt);
-        }*/
-        //else if (current == RED_RUNNING){
-        //    _RedSprite.move(0,355);
-        //}
-        if(current == RED_JUMPING){
-
-            //_RedSprite.move(0,-JUMP_SPEED*dt);
-        }
-        /*if(movement.getElapsedTime().asSeconds()>JUMP_TIME){
-            movement.restart();
-            current = RED_FALLING;
-            //velocity = -velocity;
-        }*/
         _RedSprite.setPosition(25,y);
-        //std::cout<<y<<"---"<<velocity<<std::endl;
     }
 
     void Red::Jump(){
-        /*if(current == RED_RUNNING){
-            movement.restart();
-            current = RED_JUMPING;
-        }*/if(y==355){
-            velocity = -40;
+        if(y==355){
+            velocity = -53;
             jumpSound.play();
         }
     }

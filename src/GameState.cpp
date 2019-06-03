@@ -16,7 +16,7 @@ namespace S{
 		{
 
 		}
-        if (!runMusicBuffer.loadFromFile(RUN_MUSIC_AUDIO))
+        if (!runMusicBuffer.loadFromFile("Content/bg.ogg"))
 		{
 
 		}
@@ -37,6 +37,7 @@ namespace S{
         _data->assets.LoadTexture("Obstacle2", GAME_OBSTACLE2);
         _data->assets.LoadTexture("Obstacle3", GAME_OBSTACLE3);
         _data->assets.LoadTexture("Ground", GAME_GROUND);
+        //_data->assets.LoadTexture("Cloud", GAME_CLOUD);
         _data->assets.LoadTexture("Night Ground", "Content/nightground.png");
         _data->assets.LoadTexture("Forests", FOREST_PATH);
         _data->assets.LoadTexture("Night Forests", "Content/nightforests.png");
@@ -67,6 +68,7 @@ namespace S{
         hud = new HUD(_data);
         forests = new Forests(_data);
         nightforests = new NightForests(_data);
+        //cloud = new Cloud(_data);
 
         _gameState = GameStates::eReady;
         score = 0;
@@ -74,6 +76,8 @@ namespace S{
         //currentScore("Score: 0", font, 24);
         //currentScore.setFillcolor(Color(0,0,0,0));
         currentScore.setPosition(640,20);
+        runMusic.setLoop(true);
+        runMusic.play();
     }
 
     void GameState::HandleInput(){
@@ -101,25 +105,15 @@ namespace S{
 
     void GameState::Update(float dt){
         if(GameStates::eGameOver != _gameState){
-            //runSound.setLoop(true);
-            //runSound.play();
-            //runSound.setVolume(50);
-            runMusic.setLoop(true);
-            runMusic.play();
             red->Animate(dt);
-            //if(score<3){
-                forests->MoveForests(dt);
-            /*}
-            else{
-                nightforests->MoveNightForests(dt);
-            }*/
-            obstacle->MoveObstacles(dt);
-            obstacle->MoveScoring(dt);
+            //cloud->MoveCloud(dt);
+            forests->MoveForests(dt);
             ground->MoveGround(dt);
+            obstacle->MoveScoring(dt);
         }
         if(GameStates::ePlaying==_gameState){
             obstacle->MoveObstacles(dt);
-            if(clock.getElapsedTime().asSeconds()>OBSTACLE_FREQUENCY){
+            if(clock.getElapsedTime().asSeconds()>(OBSTACLE_FREQUENCY)){
                 obstacle->Spawn();
                 obstacle->SpawnScoring();
                 clock.restart();
@@ -139,6 +133,9 @@ namespace S{
             for(int i=0; i<scoringSprites.size(); i++){
                 if(collision.CheckSpriteCollision(red->GetSprite(),0.625f,scoringSprites.at(i),1.0f)){
                     score++;
+                    if(score%5==0 && score>1){
+                        frequencyMultiply -= 0.05;
+                    }
                     hud->UpdateScore(score);
                     scoringSprites.erase(scoringSprites.begin()+i);
                 }
@@ -148,26 +145,17 @@ namespace S{
         if(GameStates::eGameOver == _gameState){
                 this->_data->machine.AddState(StateRef(new GameOverState(_data, score)), true);
                 deathSound.play();
+                runMusic.stop();
         }
     }
 
     void GameState::Draw(float dt){
-        int flag=0;
-        /*if(score>1 && score%5==0 && flag==0){
-            _background.setTexture(this->_data->assets.GetTexture("Night Backdrop"));
-            _mountain.setTexture(this->_data->assets.GetTexture("Night Mountain"));
-            flag=1;
-        }*/
         this->_data->window.clear();
         this->_data->window.draw(this->_background);
         this->_data->window.draw(this->_mountain);
 
-        /*if(score>3){
-            nightforests->DrawNightForests();
-        }
-        else{*/
-            forests->DrawForests();
-        //}
+        //cloud->DrawCloud();
+        forests->DrawForests();
         ground->DrawGround();
         obstacle->DrawObstacle();
         obstacle->DrawScoring();

@@ -1,6 +1,8 @@
 
 #include <sstream>
 #include "MainMenuState.hpp"
+#include "CreditsState.hpp"
+#include "AboutState.hpp"
 #include "GameState.hpp"
 #include "GameOverState.hpp"
 #include "DEFINITIONS.hpp"
@@ -27,6 +29,12 @@ namespace S{
         this->_creditsButton.setPosition(0, (SCREEN_HEIGHT/1.25)-(this->_playButton.getGlobalBounds().height/3));
         this->_aboutButton.setPosition((SCREEN_WIDTH-175), (SCREEN_HEIGHT/1.25)-(this->_playButton.getGlobalBounds().height/2.25));
 
+        if(!menuMusicBuffer.loadFromFile("Content/Intergalactic Odyssey.ogg")){
+
+        }
+        menuMusic.setBuffer(menuMusicBuffer);
+        menuMusic.setLoop(true);
+        menuMusic.play();
     }
 
     void MainMenuState::HandleInput(){
@@ -37,12 +45,15 @@ namespace S{
             }
             if(this->_data->input.IsSpriteClicked(this->_playButton, sf::Mouse::Left, this->_data->window)){
                 _data->machine.AddState(StateRef(new GameState(_data)),true);
+                menuMusic.stop();
             }
             if(this->_data->input.IsSpriteClicked(this->_creditsButton, sf::Mouse::Left, this->_data->window)){
-               // _data->machine.AddState(StateRef(new GameOverState(_data)),true);
+                _data->machine.AddState(StateRef(new CreditsState(_data)),true);
+                menuMusic.stop();
             }
             if(this->_data->input.IsSpriteClicked(this->_aboutButton, sf::Mouse::Left, this->_data->window)){
-                _data->machine.AddState(StateRef(new GameState(_data)),true);
+                _data->machine.AddState(StateRef(new AboutState(_data)),true);
+                menuMusic.stop();
             }
         }
     }
