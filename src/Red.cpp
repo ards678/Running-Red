@@ -2,6 +2,11 @@
 
 namespace S{
     Red::Red(GameDataRef data): _data(data){
+        if (!jumpSoundBuffer.loadFromFile(JUMPING_AUDIO))
+		{
+
+		}
+        jumpSound.setBuffer(jumpSoundBuffer);
         _animationIterator=0;
         _animationFrames.push_back(_data->assets.GetTexture("Frame 1"));
         _animationFrames.push_back(_data->assets.GetTexture("Frame 2"));
@@ -92,8 +97,10 @@ namespace S{
         /*if(current == RED_RUNNING){
             movement.restart();
             current = RED_JUMPING;
-        }*/
-        velocity = -40;
+        }*/if(y==355){
+            velocity = -40;
+            jumpSound.play();
+        }
     }
 
     void Red::Slide(){

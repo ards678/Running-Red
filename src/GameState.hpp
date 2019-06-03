@@ -43,13 +43,15 @@ namespace S{
             sf::Clock timer;
             sf::Text currentScore;
 
-            sf::SoundBuffer runSoundBuffer;
+
             sf::SoundBuffer jumpSoundBuffer;
             sf::SoundBuffer deathSoundBuffer;
+            sf::SoundBuffer runMusicBuffer;
 
-            sf::Sound runSound;
+
             sf::Sound jumpSound;
             sf::Sound deathSound;
+            sf::Sound runMusic;
 
             int _gameState, score=0, highScore=0;
     };

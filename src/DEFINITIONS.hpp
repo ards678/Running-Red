@@ -78,3 +78,4 @@ enum GameStates{
 #define RUNNING_AUDIO "Content/run.ogg"
 #define JUMPING_AUDIO "Content/jump.ogg"
 #define DEATH_AUDIO "Content/gameover.ogg"
+#define RUN_MUSIC_AUDIO "Content/bg.ogg"
