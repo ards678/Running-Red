@@ -25,6 +25,7 @@ namespace S{
             std::vector<sf::Sprite> ScoringSprites;
 
             sf::Sprite sprite;
+            sf::SoundBuffer runSoundBuffer;
 
             sf::Clock clock;
 

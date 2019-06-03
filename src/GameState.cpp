@@ -12,23 +12,16 @@ namespace S{
     }
 
     void GameState::Init(){
-        if (!runSoundBuffer.loadFromFile(RUNNING_AUDIO))
-		{
-
-		}
-
-		if (!jumpSoundBuffer.loadFromFile(JUMPING_AUDIO))
-		{
-
-		}
-
 		if (!deathSoundBuffer.loadFromFile(DEATH_AUDIO))
 		{
 
 		}
+        if (!runMusicBuffer.loadFromFile(RUN_MUSIC_AUDIO))
+		{
 
-		runSound.setBuffer(runSoundBuffer);
-		jumpSound.setBuffer(jumpSoundBuffer);
+		}
+
+        runMusic.setBuffer(runMusicBuffer);
 		deathSound.setBuffer(deathSoundBuffer);
 
         gameState = STATE_PLAYING;
@@ -93,14 +86,14 @@ namespace S{
                 if(GameStates::eGameOver != _gameState){
                     _gameState = GameStates::ePlaying;
                     red->Jump();
-                    jumpSound.play();
+
                 }
             }
             else if(_data->input.Slide()){
                 if(GameStates::eGameOver != _gameState){
                     _gameState = GameStates::ePlaying;
                     red->Slide();
-                    jumpSound.play();
+                    //jumpSound.play();
                 }
             }
         }
@@ -108,6 +101,11 @@ namespace S{
 
     void GameState::Update(float dt){
         if(GameStates::eGameOver != _gameState){
+            //runSound.setLoop(true);
+            //runSound.play();
+            //runSound.setVolume(50);
+            runMusic.setLoop(true);
+            runMusic.play();
             red->Animate(dt);
             //if(score<3){
                 forests->MoveForests(dt);
@@ -155,11 +153,11 @@ namespace S{
 
     void GameState::Draw(float dt){
         int flag=0;
-        if(score>1 && score%5==0 && flag==0){
+        /*if(score>1 && score%5==0 && flag==0){
             _background.setTexture(this->_data->assets.GetTexture("Night Backdrop"));
             _mountain.setTexture(this->_data->assets.GetTexture("Night Mountain"));
             flag=1;
-        }
+        }*/
         this->_data->window.clear();
         this->_data->window.draw(this->_background);
         this->_data->window.draw(this->_mountain);

@@ -25,7 +25,8 @@ namespace S{
 
             sf::Clock clock;
             sf::Clock movement;
-
+            sf::SoundBuffer jumpSoundBuffer;
+            sf::Sound jumpSound;
             int current;
             float velocity=0, y;
     };
