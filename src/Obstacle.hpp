@@ -23,5 +23,11 @@ namespace S{
             GameDataRef _data;
             std::vector<sf::Sprite> ObstacleSprites;
             std::vector<sf::Sprite> ScoringSprites;
+
+            sf::Sprite sprite;
+
+            sf::Clock clock;
+
+            float speedMultiply=0;
     };
 }

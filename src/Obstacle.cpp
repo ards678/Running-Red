@@ -15,21 +15,37 @@ namespace S{
     }
 
     void Obstacle::Spawn(){
-        sf::Sprite sprite(this->_data->assets.GetTexture("Obstacle1"));
-        sprite.setPosition(this->_data->window.getSize().x, 350);
-        ObstacleSprites.push_back(sprite);
+        (srand(time(NULL)));
+        if(rand()%3==0){
+            sf::Sprite sprite(this->_data->assets.GetTexture("Obstacle1"));
+            sprite.setPosition(this->_data->window.getSize().x, 420);
+            ObstacleSprites.push_back(sprite);
+        }
+        else if(rand()%3==1){
+            sf::Sprite sprite(this->_data->assets.GetTexture("Obstacle2"));
+            sprite.setPosition(this->_data->window.getSize().x, 420);
+            ObstacleSprites.push_back(sprite);
+        }
+        else if(rand()%3==2){
+            sf::Sprite sprite(this->_data->assets.GetTexture("Obstacle3"));
+            sprite.setPosition(this->_data->window.getSize().x, 420);
+            ObstacleSprites.push_back(sprite);
+        }
     }
 
     void Obstacle::MoveObstacles(float dt){
+        if(clock.getElapsedTime().asMilliseconds()%1000==0 && clock.getElapsedTime().asSeconds()>5)
+            speedMultiply += 0.012;
         for(unsigned short int i=0; i<ObstacleSprites.size(); i++){
             if(ObstacleSprites.at(i).getPosition().x<0 - ObstacleSprites.at(i).getGlobalBounds().width){
                 ObstacleSprites.erase(ObstacleSprites.begin()+i);
             }
             else{
                 sf::Vector2f position = ObstacleSprites.at(i).getPosition();
-                float movement = OBSTACLE_SPEED*dt;
+                float movement = speedMultiply+(OBSTACLE_SPEED*dt);
                 ObstacleSprites.at(i).move(-movement,0);
             }
+            std::cout<<movement<<std::endl;
         }
 
     }
@@ -43,20 +59,23 @@ namespace S{
     void Obstacle::SpawnScoring(){
         sf::Sprite sprite(this->_data->assets.GetTexture("Scoring"));
         sprite.setPosition(this->_data->window.getSize().x, 0);
-        sprite.setColor(sf::Color(0,0,0,0));
+        //sprite.setColor(sf::Color(0,0,0,0));
         ScoringSprites.push_back(sprite);
     }
 
     void Obstacle::MoveScoring(float dt){
+        if(clock.getElapsedTime().asMilliseconds()%5==0 && clock.getElapsedTime().asSeconds()>1)
+            speedMultiply += 0.25;
         for(unsigned short int i=0; i<ScoringSprites.size(); i++){
             if(ObstacleSprites.at(i).getPosition().x<0 - ObstacleSprites.at(i).getGlobalBounds().width){
                 ScoringSprites.erase(ScoringSprites.begin()+i);
             }
             else{
                 sf::Vector2f position = ObstacleSprites.at(i).getPosition();
-                float movement = (OBSTACLE_SPEED*2)*dt;
+                float movement = speedMultiply+((OBSTACLE_SPEED*2)*dt);
                 ScoringSprites.at(i).move(-movement,0);
             }
+            std::cout<<movement<<std::endl;
         }
     }
 

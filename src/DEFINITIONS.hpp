@@ -19,15 +19,19 @@
 #define GAME_CLOUD "Content/cloud.png"
 #define GAME_MOUNTAIN "Content/static mountain.png"
 #define GAME_OBSTACLE1 "Content/tree trunk.png"
+#define GAME_OBSTACLE2 "Content/rock.png"
+#define GAME_OBSTACLE3 "Content/spikes.png"
+#define FOREST_PATH "Content/forests.png"
 
 #define STATE_PLAYING 95
 #define STATE_PAUSED 94
 #define STATE_DEAD 93
 
 #define OBSTACLE_SPEED 200.0f
+#define FOREST_SPEED 50.0f
 #define OBSTACLE_FREQUENCY 6.0f
 
-#define CLOUD_SPEED 200.0f
+#define CLOUD_SPEED 25.0f
 #define CLOUD_FREQUENCY 2.0f
 
 #define RED_FRAME_1 "Content/frame1.png"
@@ -56,7 +60,7 @@
 #define RED_FALLING 3
 #define RED_SLIDING 4
 
-#define GRAVITY 175.5f
+#define GRAVITY 96.5f
 #define JUMP_SPEED 100.5f
 #define JUMP_TIME 1.0f
 
