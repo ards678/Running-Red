@@ -6,6 +6,7 @@
 #include "Obstacle.hpp"
 #include "Player.hpp"
 #include "State.hpp"
+#include "Forests.hpp"
 
 namespace S {
 class GameState : public State {
@@ -29,6 +30,8 @@ class GameState : public State {
   sf::Sprite _cloud;
   sf::Sprite _ground;
   // sf::Sprite _exitButton;
+
+Forests *forests;
   bool beginIsMinused;
   int gameState;
   Obstacle *obstacle;

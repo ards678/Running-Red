@@ -19,9 +19,16 @@ void GameState::Init() {
                                   GAME_STATIC_BACKGROUND_FILEPATH);
   _background.setTexture(this->_data->assets.GetTexture("Game Background"));
 
+        _data->assets.LoadTexture("Forests", FOREST_PATH);
   _data->assets.LoadTexture("Obstacle1", GAME_OBSTACLE1);
+  _data->assets.LoadTexture("Obstacle1", GAME_OBSTACLE1);
+        _data->assets.LoadTexture("Obstacle2", GAME_OBSTACLE2);
+        _data->assets.LoadTexture("Obstacle3", GAME_OBSTACLE3);
+        _data->assets.LoadTexture("Obstacle4", "Content/flyingtree.png");
+        _data->assets.LoadTexture("Obstacle5", "Content/hourglass.png");
   _data->assets.LoadTexture("Ground", GAME_GROUND);
 
+        forests = new Forests(_data);
   obstacle = new Obstacle(_data);
   ground = new Ground(_data);
   player = new Player(_data);
@@ -60,10 +67,12 @@ void GameState::Update(float dt) {
   }
 
   else {
+
     float elapsed = gameClock.getElapsedTime().asSeconds();
 
     float speed = 530 + 40 * sqrt(elapsed);
     obstacle->MoveObstacles(dt, speed);
+            forests->MoveForests(speed, dt);
     // obstacle->Spawn();
     player->animate(dt, speed);
     ground->MoveGround(dt, speed);
@@ -93,9 +102,9 @@ void GameState::Update(float dt) {
       }
     }
 
-    srand(elapsed);
+    srand(elapsed+time(NULL));
     if (clock.getElapsedTime().asSeconds() >
-        8 * (1 / (1+elapsed)) + OBSTACLE_FREQUENCY +
+        OBSTACLE_FREQUENCY +
             (pow(-1, rand() % 100) * (rand() % 5) * 0.2)) {
       obstacle->Spawn();
       clock.restart();
@@ -111,6 +120,8 @@ void GameState::Update(float dt) {
 void GameState::Draw(float dt) {
   this->_data->window.clear();
   this->_data->window.draw(this->_background);
+
+        forests->DrawForests();
   this->_data->window.draw(this->_player);
   this->_data->window.draw(this->player->sprite);
   this->_data->window.draw(this->_cloud);

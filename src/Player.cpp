@@ -37,7 +37,7 @@ void Player::animate(float dt, float speed) {
 void Player::jump() {
   jumpSound.openFromFile("content/jump.ogg");
   jumpSound.play();
-  if (sprite.getPosition().y == defaultPos) velocity = -25;
+  if (sprite.getPosition().y == defaultPos) velocity = -50;
 }
 
 // void SpriteAnimate::slide(){
@@ -49,7 +49,7 @@ void Player::updatePosition(float dt) {
   cout << "dt: " << dt << endl;
   y += velocity;
   if (y > defaultPos) y = defaultPos;
-  if (y < 200) y = 200;
+  if (y < 150) y = 150;
   if (y != defaultPos)
     frames = 0.15;
   else
@@ -58,10 +58,13 @@ void Player::updatePosition(float dt) {
 }
 
 bool Player::isHit(Sprite s) {
-
-  return (sprite.getPosition().x < s.getPosition().x + (0.7*s.getLocalBounds().width) &&
-          sprite.getPosition().x + 0.7*sprite.getLocalBounds().width > s.getPosition().x &&
-          sprite.getPosition().y < s.getPosition().y + 0.7*s.getLocalBounds().height &&
-          0.7*sprite.getLocalBounds().height + sprite.getPosition().y> s.getPosition().y);
+  return (sprite.getPosition().x <
+              s.getPosition().x + (0.7 * s.getLocalBounds().width) &&
+          sprite.getPosition().x + 0.7 * sprite.getLocalBounds().width >
+              s.getPosition().x &&
+          sprite.getPosition().y <
+              s.getPosition().y + 0.7 * s.getLocalBounds().height &&
+          0.7 * sprite.getLocalBounds().height + sprite.getPosition().y >
+              s.getPosition().y);
 }
 }  // namespace S

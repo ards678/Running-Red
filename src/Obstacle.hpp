@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include "Game.hpp"
 #include <vector>
+#include <time.h>
+#include <stdlib.h>
 
 namespace S{
     class Obstacle{
