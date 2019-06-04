@@ -6,7 +6,7 @@
 #include <map>
 #include "Collision.h"
 
-namespace Collision
+namespace CollisionManager
 {
 	class BitmaskManager
 	{

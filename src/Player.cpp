@@ -1,13 +1,15 @@
-#include "DEFINITIONS.hpp"
 #import "Player.hpp"
 #import <cmath>
+#include "DEFINITIONS.hpp"
 
 namespace S {
-     Player::Player(GameDataRef data): _data(data){
+Player::Player(GameDataRef data)
+    : _data(data){
 
-    };
+      };
 
-void Player::initializePlayer(String s, IntRect r, Vector2f f, float fr, int b, int i) {
+void Player::initializePlayer(String s, IntRect r, Vector2f f, float fr, int b,
+                              int i) {
   rect = r;
   t.loadFromFile(s);
   sprite.setTexture(t);
@@ -21,7 +23,8 @@ void Player::initializePlayer(String s, IntRect r, Vector2f f, float fr, int b, 
 }
 
 void Player::animate(float dt, float speed) {
-  if (clock.getElapsedTime().asSeconds() >10*( 1/pow(speed, 0.9))) {
+  updatePosition(dt);
+  if (clock.getElapsedTime().asSeconds() > 10 * (1 / pow(speed, 0.9))) {
     if (rect.left >= bounds)
       rect.left = 0;
     else
@@ -29,7 +32,6 @@ void Player::animate(float dt, float speed) {
     sprite.setTextureRect(rect);
     clock.restart();
   }
-  updatePosition(dt);
 }
 
 void Player::jump() {
@@ -44,6 +46,7 @@ void Player::jump() {
 
 void Player::updatePosition(float dt) {
   velocity += gravity * dt;
+  cout << "dt: " << dt << endl;
   y += velocity;
   if (y > defaultPos) y = defaultPos;
   if (y < 200) y = 200;
@@ -52,5 +55,13 @@ void Player::updatePosition(float dt) {
   else
     frames = 0.05;
   sprite.setPosition(x, y);
+}
+
+bool Player::isHit(Sprite s) {
+
+  return (sprite.getPosition().x < s.getPosition().x + (0.7*s.getLocalBounds().width) &&
+          sprite.getPosition().x + 0.7*sprite.getLocalBounds().width > s.getPosition().x &&
+          sprite.getPosition().y < s.getPosition().y + 0.7*s.getLocalBounds().height &&
+          0.7*sprite.getLocalBounds().height + sprite.getPosition().y> s.getPosition().y);
 }
 }  // namespace S

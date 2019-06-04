@@ -27,8 +27,13 @@ void GameState::Init() {
   player = new Player(_data);
 
   player->initializePlayer("content/playerspritesheet.png",
-                           IntRect(0, 0, 128, 128), Vector2f(400, 310), 0.05,
+                           IntRect(0, 0, 128, 128), Vector2f(30, 310), 0.05,
                            1664, 128);
+  player_pos_x = player->x;
+  // POSX = player->x
+  score = 0;
+
+  bool beginIsMinused = false;
 }
 
 void GameState::HandleInput() {
@@ -37,6 +42,12 @@ void GameState::HandleInput() {
     if (sf::Event::Closed == event.type) {
       this->_data->window.close();
     }
+    if (_data->input.Jump(player->sprite)) {
+      //   if (GameStates::eGameOver != _gameState) {
+      //     _gameState = GameStates::ePlaying;
+      player->jump();
+      //   }
+    }
     if (sf::Keyboard::Escape == event.type) {
       this->_data->window.close();
     }
@@ -44,23 +55,57 @@ void GameState::HandleInput() {
 }
 
 void GameState::Update(float dt) {
-  float elapsed = gameClock.getElapsedTime().asSeconds();
+  if (gameOver) {
+    cout << "gameover!!!!!!!!" << endl;
+  }
 
-  float speed = 150 + 40 * elapsed;
-  obstacle->MoveObstacles(dt, speed);
-  // obstacle->Spawn();
-  player->animate(dt,speed);
-  ground->MoveGround(dt, speed);
-  cout << "time: " << elapsed << endl;
-  srand(elapsed);
-  if (clock.getElapsedTime().asSeconds() >
-      OBSTACLE_FREQUENCY + (pow(-1, rand() % 100) * (rand() % 5) * 0.2)) {
-    obstacle->Spawn();
-    clock.restart();
+  else {
+    float elapsed = gameClock.getElapsedTime().asSeconds();
+
+    float speed = 530 + 40 * sqrt(elapsed);
+    obstacle->MoveObstacles(dt, speed);
+    // obstacle->Spawn();
+    player->animate(dt, speed);
+    ground->MoveGround(dt, speed);
+    cout << "time: " << elapsed << "score: " << score << endl;
+    // bool incrementScore = false;
+    for (auto i = obstacle->ObstacleSprites.begin();
+         i != obstacle->ObstacleSprites.end(); i++) {
+             gameOver = player->isHit(*i);
+      if (i == obstacle->ObstacleSprites.begin() && !beginIsMinused &&
+          i->getPosition().x < player_pos_x) {
+        score++;
+        beginIsMinused = true;
+        // player->sprite.getLo
+      }
+      // if (i->getPosition().x < player_pos_x && i = ) {
+      //   if (!incrementScore) {
+      //     score++;
+      //     incrementScore = true;
+      //   }
+      // }
+    }
+    if (obstacle->ObstacleSprites.size() != 0) {
+      if (obstacle->ObstacleSprites.begin()->getPosition().x < -50) {
+        obstacle->Destroy();
+        cout << "dest" << endl;
+        beginIsMinused = false;
+      }
+    }
+
+    srand(elapsed);
+    if (clock.getElapsedTime().asSeconds() >
+        8 * (1 / (1+elapsed)) + OBSTACLE_FREQUENCY +
+            (pow(-1, rand() % 100) * (rand() % 5) * 0.2)) {
+      obstacle->Spawn();
+      clock.restart();
+    }
   }
-  if (clock.getElapsedTime().asSeconds() > 4) {
-    obstacle->Destroy();
-  }
+  //   if (clock.getElapsedTime().asSeconds() > 4) {
+  //     obstacle->Destroy();
+  //   }
+
+  //   player->updatePosition();
 }
 
 void GameState::Draw(float dt) {

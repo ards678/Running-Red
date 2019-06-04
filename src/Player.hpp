@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.hpp"
-
+// #include "Collision.hpp"
+// #include "Collision.h"
 using namespace std;
 using namespace sf;
 
@@ -11,6 +12,7 @@ class Player {
   void initializePlayer(String, IntRect, Vector2f, float, int, int);
   void animate(float dt,float speed);
   void jump();
+  bool isHit(Sprite s);
   // void slide();
   Music jumpSound;
   Sprite sprite;
@@ -25,7 +27,7 @@ class Player {
   IntRect rect;
   Clock clock, c;
   float defaultPos;
-  float velocity = 0, gravity = 1.2;
+  float velocity = 0, gravity = 100;
   float frames;
   int bounds;
 };
