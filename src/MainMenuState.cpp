@@ -34,6 +34,7 @@ namespace S{
         }
         menuMusic.setBuffer(menuMusicBuffer);
         menuMusic.setLoop(true);
+        menuMusic.setVolume(55);
         menuMusic.play();
     }
 

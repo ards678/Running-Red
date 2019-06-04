@@ -36,6 +36,8 @@ namespace S{
         _data->assets.LoadTexture("Obstacle1", GAME_OBSTACLE1);
         _data->assets.LoadTexture("Obstacle2", GAME_OBSTACLE2);
         _data->assets.LoadTexture("Obstacle3", GAME_OBSTACLE3);
+        _data->assets.LoadTexture("Obstacle4", "Content/flyingtree.png");
+        _data->assets.LoadTexture("Obstacle5", "Content/hourglass.png");
         _data->assets.LoadTexture("Ground", GAME_GROUND);
         //_data->assets.LoadTexture("Cloud", GAME_CLOUD);
         _data->assets.LoadTexture("Night Ground", "Content/nightground.png");
@@ -97,7 +99,6 @@ namespace S{
                 if(GameStates::eGameOver != _gameState){
                     _gameState = GameStates::ePlaying;
                     red->Slide();
-                    //jumpSound.play();
                 }
             }
         }
@@ -112,20 +113,28 @@ namespace S{
             obstacle->MoveScoring(dt);
         }
         if(GameStates::ePlaying==_gameState){
-            obstacle->MoveObstacles(dt);
-            if(clock.getElapsedTime().asSeconds()>(OBSTACLE_FREQUENCY)){
-                obstacle->Spawn();
-                obstacle->SpawnScoring();
+            texture=obstacle->MoveObstacles(dt);
+            if(clock.getElapsedTime().asSeconds()>(frequencyMultiply+OBSTACLE_FREQUENCY)){
+                obstacle->Spawn(score);
+                obstacle->SpawnScoring(score);
                 clock.restart();
             }
         }
         red->Update(dt);
 
         std::vector<sf::Sprite> obstacleSprites = obstacle->GetSprite();
+        std::cout<<"Texture: "<<texture<<std::endl;
+        std::cout<<"Current: "<<red->current<<std::endl;
         for(int i=0; i<obstacleSprites.size(); i++){
             if(collision.CheckSpriteCollision(red->GetSprite(),0.625f,obstacleSprites.at(i),1.0f)){
-                _gameState = GameStates::eGameOver;
-                clock.restart();
+                if((red->current == RED_RUNNING || red->current == RED_JUMPING || red->current == RED_SLIDING)&&texture==1){
+                    _gameState = GameStates::eGameOver;
+                    clock.restart();
+                }
+                if((red->current == RED_RUNNING || red->current == RED_JUMPING)&&texture==2){
+                    _gameState = GameStates::eGameOver;
+                    clock.restart();
+                }
             }
         }
         if(GameStates::ePlaying == _gameState){
@@ -134,7 +143,7 @@ namespace S{
                 if(collision.CheckSpriteCollision(red->GetSprite(),0.625f,scoringSprites.at(i),1.0f)){
                     score++;
                     if(score%5==0 && score>1){
-                        frequencyMultiply -= 0.05;
+                        frequencyMultiply -= 0.04;
                     }
                     hud->UpdateScore(score);
                     scoringSprites.erase(scoringSprites.begin()+i);

@@ -12,7 +12,7 @@ namespace S{
     }
 
     void AboutState::Init(){
-        this->_data->assets.LoadTexture("Background", "Content/Credits.png");
+        this->_data->assets.LoadTexture("Background", "Content/About.png");
 
         this->_background.setTexture(this->_data->assets.GetTexture("Background"));
 

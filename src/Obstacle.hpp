@@ -8,13 +8,16 @@ namespace S{
     class Obstacle{
         public:
             Obstacle(GameDataRef data);
-            void Spawn();
-            void SpawnScoring();
-            void MoveObstacles(float dt);
+            void Spawn(int score);
+            void SpawnScoring(int score);
+            int MoveObstacles(float dt);
             void MoveScoring(float dt);
             void DrawObstacle();
             void DrawScoring();
             bool isHit(sf::Sprite object);
+
+            int texture;
+            std::vector<int> textureCount;
 
             const std::vector<sf::Sprite> &GetSprite() const;
             std::vector<sf::Sprite> &GetScoringSprites();

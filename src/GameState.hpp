@@ -56,7 +56,7 @@ namespace S{
             sf::Sound deathSound;
             sf::Sound runMusic;
 
-            int _gameState, score=0, highScore=0;
+            int _gameState, score=0, highScore=0, texture;
             float frequencyMultiply=0;
     };
 }

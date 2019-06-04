@@ -14,6 +14,8 @@ namespace S{
             void Jump();
             void Slide();
 
+            int current;
+
             const sf::Sprite &GetSprite() const;
 
         private:
@@ -27,7 +29,9 @@ namespace S{
             sf::Clock movement;
             sf::SoundBuffer jumpSoundBuffer;
             sf::Sound jumpSound;
-            int current;
+            sf::SoundBuffer runSoundBuffer;
+            sf::Sound runSound;
+
             float velocity=0, y;
     };
 }
