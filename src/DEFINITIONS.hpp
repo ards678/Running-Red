@@ -3,7 +3,7 @@
 #define SCREEN_WIDTH 1280
 #define SCREEN_HEIGHT 720
 
-#define SPLASH_STATE_SHOW_TIME 2.5
+#define SPLASH_STATE_SHOW_TIME 0.1
 
 #define SPLASH_SCENE_BACKGROUND_FILEPATH "Content/splash.png"
 #define MAIN_MENU_BACKGROUND_FILEPATH "Content/menu.png"
