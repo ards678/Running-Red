@@ -21,6 +21,8 @@ namespace S{
             sf::Sprite _playButton;
             sf::Sprite _creditsButton;
             sf::Sprite _aboutButton;
-            //sf::Sprite _exitButton;
+
+            sf::SoundBuffer menuMusicBuffer;
+            sf::Sound menuMusic;
     };
 }

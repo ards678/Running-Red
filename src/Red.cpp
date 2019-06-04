@@ -7,6 +7,11 @@ namespace S{
 
 		}
         jumpSound.setBuffer(jumpSoundBuffer);
+        if (!runSoundBuffer.loadFromFile(RUNNING_AUDIO))
+		{
+
+		}
+        runSound.setBuffer(runSoundBuffer);
         _animationIterator=0;
         _animationFrames.push_back(_data->assets.GetTexture("Frame 1"));
         _animationFrames.push_back(_data->assets.GetTexture("Frame 2"));
@@ -28,86 +33,81 @@ namespace S{
         _animationFrames.push_back(_data->assets.GetTexture("Slide 2"));
         _RedSprite.setTexture(_animationFrames.at(_animationIterator));
 
-        _RedSprite.setPosition(25,355);
+        _RedSprite.setPosition(100,400);
         current = RED_RUNNING;
+        runSound.play();
+
     }
     void Red::Draw(){
         _data->window.draw(_RedSprite);
     }
     void Red::Animate(float dt){
-        if(clock.getElapsedTime().asSeconds()>ANIMATION_TIME/14){
-            /*if(current == RED_JUMPING){
-                _animationIterator=15;
+        if(clock.getElapsedTime().asSeconds()>ANIMATION_TIME/_animationFrames.size()){
+            if(current == RED_JUMPING){
+                _animationIterator=14;
             }
             else if(current == RED_SLIDING){
                 _animationIterator=17;
             }
-            else{*/
+            else{
                 if(_animationIterator<13){
                     _animationIterator++;
                 }
                 else{
                     _animationIterator=0;
                 }
-            //}
+            }
             _RedSprite.setTexture(_animationFrames.at(_animationIterator));
             clock.restart();
         }
     }
     void Red::Update(float dt){
-
+        std::cout<<y<<"---"<<velocity<<std::endl;
         y += velocity;
-        if(y<160){
-            y=160;
+        if(current == RED_SLIDING){
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                current == RED_RUNNING;
+        }
         }
 
-        if(y>355){
-            y=355;
+        if(y<150){
+            y=150;
+            //current = RED_JUMPING;
         }
+
+        //if((current == RED_JUMPING || current == RED_RUNNING)){
+        if(y>355){
+                y=355;
+                if((current == RED_JUMPING || current == RED_RUNNING)){
+                    current = RED_RUNNING;
+                    runSound.play();
+                }
+        }
+        //}
         else{
             velocity += GRAVITY*dt;
         }
-        /*if(_RedSprite.getPosition().y>=355){
-            _RedSprite.setPosition(25,355);
-            current = RED_RUNNING;
-        }
-        if(current == RED_SLIDING){
-            _RedSprite.move(0,355);
-        }
-        if(current == RED_FALLING){
-            _RedSprite.move(0,GRAVITY*dt);
-        }*/
-        //else if (current == RED_RUNNING){
-        //    _RedSprite.move(0,355);
-        //}
-        if(current == RED_JUMPING){
-
-            //_RedSprite.move(0,-JUMP_SPEED*dt);
-        }
-        /*if(movement.getElapsedTime().asSeconds()>JUMP_TIME){
-            movement.restart();
-            current = RED_FALLING;
-            //velocity = -velocity;
-        }*/
         _RedSprite.setPosition(25,y);
-        //std::cout<<y<<"---"<<velocity<<std::endl;
     }
 
     void Red::Jump(){
-        /*if(current == RED_RUNNING){
-            movement.restart();
-            current = RED_JUMPING;
-        }*/if(y==355){
-            velocity = -40;
+        if(y==355){
+            velocity = -45;
             jumpSound.play();
+            current = RED_JUMPING;
+            runSound.stop();
         }
     }
 
     void Red::Slide(){
-        //if(current == RED_RUNNING || current == RED_SLIDING){
-            movement.restart();
+        if(y==355 && current == RED_RUNNING){
             current = RED_SLIDING;
-        //}
+            runSound.stop();
+        }
+        else{
+            velocity = 3;
+        }
+
     }
 
     const sf::Sprite &Red::GetSprite() const{

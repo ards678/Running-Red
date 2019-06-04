@@ -6,6 +6,7 @@
 #include "Ground.hpp"
 #include "Forests.hpp"
 #include "NightForests.hpp"
+#include "Cloud.hpp"
 #include "Red.hpp"
 #include "Game.hpp"
 #include "CollisionChecker.hpp"
@@ -38,9 +39,11 @@ namespace S{
             NightForests *nightforests;
             Red *red;
             HUD *hud;
+            Cloud *cloud;
             Collision collision;
             sf::Clock clock;
             sf::Clock timer;
+            sf::Clock cloudClock;
             sf::Text currentScore;
 
 
@@ -53,6 +56,7 @@ namespace S{
             sf::Sound deathSound;
             sf::Sound runMusic;
 
-            int _gameState, score=0, highScore=0;
+            int _gameState, score=0, highScore=0, texture;
+            float frequencyMultiply=0;
     };
 }
